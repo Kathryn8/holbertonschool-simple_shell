@@ -1,5 +1,7 @@
 # Simple Shell Project
 
+Hello Kathryn O.O
+
 This repository contains a simple shell that can run in linux. It was created for educational purposes by Holberton Software Engingeering students to culminate our studies in C language and linux system. 
 
 CHANGE IMAGE just an example
