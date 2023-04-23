@@ -25,7 +25,6 @@ int main()
 		getret = getline(&buffer, &bufsize, stdin);
 		if (getret == -1)
 		{
-			printf("exit\n");
 			return (0);
 		}
 
@@ -48,20 +47,18 @@ int main()
 		{
 			if (argv[0] == NULL)
 			{
-				printf("argv[0] = NULL\n");
 				return (-1);
 			}
 
 			if (execve(argv[0], argv, NULL) == -1)
 			{
-				printf("Execve error!\n");
+				printf("No such file or directory\n");
 				return (-1);
 			}
 		}
 		else
 		{
 			wait(NULL);
-			printf("This is the parent process\n");
 		}
 		free(buffer);
 	}
