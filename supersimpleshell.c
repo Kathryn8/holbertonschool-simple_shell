@@ -60,7 +60,6 @@ int main()
 		{
 			wait(NULL);
 		}
-		free(str);
 		free(buffer);
 	}
 }
