@@ -5,7 +5,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-int main(int ac, char *av[])
+int main(__attribute__((unused)) int ac, char *av[])
 {
 	char *argv[100];
 	int returnpid;
