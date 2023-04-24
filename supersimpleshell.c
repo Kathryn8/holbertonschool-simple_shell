@@ -20,10 +20,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 	while (1)
 	{
 		signal(SIGINT, SIG_IGN);
-		if (isatty(0) == 1)
-		{
-			printf("$ ");
-		}
+		printf("$ ");
 		buffer = NULL;
 		bufsize = 0;
 		getret = getline(&buffer, &bufsize, stdin);
