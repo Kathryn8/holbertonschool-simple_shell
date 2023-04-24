@@ -19,14 +19,14 @@ int main()
 
 	while (1)
 	{
-		signal(SIGINT, SIG_IGN); // this stops the ctrl + C
+		signal(SIGINT, SIG_IGN);
 		printf("$ ");
 		buffer = NULL;
 		bufsize = 0;
 		getret = getline(&buffer, &bufsize, stdin);
 		if (getret == -1)
 		{
-			free(buffer); //should we free here?
+			free(buffer);
 			return (0);
 		}
 		if (argv[0] == NULL)
