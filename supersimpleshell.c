@@ -5,9 +5,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-int main()
+int main(int ac, char *av[])
 {
-	char *argv[2];
+	char *argv[100];
 	int returnpid;
 	char *buffer;
 	size_t bufsize;
@@ -29,14 +29,10 @@ int main()
 			free(buffer);
 			return (0);
 		}
-		if (argv[0] == NULL)
-		{
-			printf("thats a space\n");
-			continue;
-		}
 
 		str = malloc(sizeof(*str) * bufsize);
-		str = buffer;
+		str = strdup(buffer);
+		free(buffer);
 		delim = " \t\n";
 		token = strtok(str, delim);
 		i = 0;
@@ -47,13 +43,19 @@ int main()
 			i = i + 1;
 		}
 		argv[i] = NULL;
+		if (argv[0] == NULL)
+		{
+			free(str);
+			continue;
+		}
+
 		returnpid = fork();
 		if (returnpid == 0)
 		{
 			
 			if (execve(argv[0], argv, NULL) == -1)
 			{
-				printf("%s: No such file or directory\n", argv[0]);
+				printf("%s: No such file or directory\n", av[0]);
 				return (-1);
 			}
 		}
@@ -61,6 +63,6 @@ int main()
 		{
 			wait(NULL);
 		}
-		free(buffer);
+		free(str);
 	}
 }
