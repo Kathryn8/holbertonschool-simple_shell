@@ -16,22 +16,28 @@ int main()
 	char *token;
 	char * str;
 	int i;
-	
+
 	while (1)
 	{
+		signal(SIGINT, SIG_IGN); // this stops the ctrl + C
 		printf("$ ");
 		buffer = NULL;
 		bufsize = 0;
 		getret = getline(&buffer, &bufsize, stdin);
 		if (getret == -1)
 		{
+			free(buffer); //should we free here?
 			return (0);
+		}
+		if (argv[0] == NULL)
+		{
+			printf("thats a space\n");
+			continue;
 		}
 
 		str = malloc(sizeof(*str) * bufsize);
 		str = buffer;
-		
-		delim = " \n";
+		delim = " \t\n";
 		token = strtok(str, delim);
 		i = 0;
 		while (token != NULL)
@@ -41,18 +47,13 @@ int main()
 			i = i + 1;
 		}
 		argv[i] = NULL;
-
 		returnpid = fork();
 		if (returnpid == 0)
 		{
-			if (argv[0] == NULL)
-			{
-				return (-1);
-			}
-
+			
 			if (execve(argv[0], argv, NULL) == -1)
 			{
-				printf("No such file or directory\n");
+				printf("%s: No such file or directory\n", argv[0]);
 				return (-1);
 			}
 		}
