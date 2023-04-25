@@ -76,7 +76,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 		if (strcmp(argv[0], "exit") == 0)
 		{
 			free(str);
-			exit(2);			
+			exit(0);			
 		}
 		if (stat(argv[0], &st) == 0 && st.st_mode & S_IXUSR)
 		{
