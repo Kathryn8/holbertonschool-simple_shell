@@ -18,7 +18,7 @@ void get_input(char **buffer, size_t *bufsize, ssize_t *getret)
 	if (*getret == -1)
 	{
 		free(*buffer);
-		exit(EXIT_SUCCESS);
+		exit(EXIT_FAILURE);
 	}
 }
 
