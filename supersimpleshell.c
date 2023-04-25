@@ -78,7 +78,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 		if (strcmp(argv[0], "exit") == 0)
 		{
 			free(str);
-			exit(0);			
+			exit(0);
 		}
 		if (stat(argv[0], &st) == 0 && st.st_mode & S_IXUSR)
 		{
@@ -95,6 +95,16 @@ int main(__attribute__((unused)) int ac, char *av[])
 		else
 		{
 			printf("%s: No such file or directory\n", av[0]);
+			i = 0;
+			while (argv[i] != NULL)
+			{
+				if (strcmp(argv[i], "exit") == 0)
+				{
+					free(str);
+					exit(0);
+				}
+				i = i + 1;
+			}
 		}
 		free(str);
 	}
