@@ -6,6 +6,8 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 
+char *get_path(char *name);
+
 void get_input(char **buffer, size_t *bufsize, ssize_t *getret)
 {
 	signal(SIGINT, SIG_IGN);
@@ -91,10 +93,24 @@ int main(__attribute__((unused)) int ac, char *av[])
 					free(str);
 					exit(2);
 				}
-			}			
+			}
 			else
 			{
 				wait(NULL);
+			}
+		}
+		else if ((argv[0] = get_path(argv[0])) != NULL)
+		{
+			returnpid = fork();
+			if (returnpid == 0)
+			{
+				if (execve(argv[0], argv, environ) == -1)
+				{
+					printf("%s: No such file or directory\n", av[0]);
+					free(str);
+					free(argv[0]);
+					exit(2);
+				}
 			}
 		}
 		else
