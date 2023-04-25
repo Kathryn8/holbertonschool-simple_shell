@@ -22,6 +22,17 @@ void get_input(char **buffer, size_t *bufsize, ssize_t *getret)
 	}
 }
 
+int print_env(char *envp[])
+{
+	int i = 0;
+	while (envp[i] != NULL)
+	{
+		printf("%s\n", envp[i]);
+		i = i + 1;
+	}
+	return (0);
+}
+
 int main(__attribute__((unused)) int ac, char *av[])
 {
 	char *argv[100];
@@ -58,18 +69,22 @@ int main(__attribute__((unused)) int ac, char *av[])
 			free(str);
 			continue;
 		}
+		if (strcmp(argv[0], "env") == 0)
+		{
+			print_env(environ);
+		}
+		if (strcmp(argv[0], "exit") == 0)
+		{
+			free(str);
+			exit(EXIT_SUCCESS);			
+		}
 		if (stat(argv[0], &st) == 0 && st.st_mode & S_IXUSR)
 		{
 			returnpid = fork();
 			if (returnpid == 0)
 			{
-				if (execve(argv[0], argv, environ) == -1)
-				{
-					printf("%s: No such file or directory\n", av[0]);
-					return (-1);
-				}
-			}
-			
+				execve(argv[0], argv, environ);
+			}			
 			else
 			{
 				wait(NULL);
