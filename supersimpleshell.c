@@ -14,6 +14,7 @@ void get_input(char **buffer, size_t *bufsize, ssize_t *getret)
 		printf("$ ");
 	}
 	*getret = getline(buffer, bufsize, stdin);
+	fflush(stdin);
 	if (*getret == -1)
 	{
 		free(*buffer);
@@ -33,6 +34,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 	int i;
 	ssize_t getret = 0;
 	struct stat st;
+	extern char **environ;
 	
 	while (1)
 	{
@@ -57,26 +59,26 @@ int main(__attribute__((unused)) int ac, char *av[])
 			free(str);
 			continue;
 		}
-		if (stat(argv[0], &st) == -1)
-		{
-			printf("%s: No such file or directory\n", av[0]);
-			continue;
-		}
-		if (st.st_mode & S_IXUSR)
+		if (stat(argv[0], &st) == 0 && st.st_mode & S_IXUSR)
 		{
 			returnpid = fork();
 			if (returnpid == 0)
 			{
-				if (execve(argv[0], argv, NULL) == -1)
+				if (execve(argv[0], argv, environ) == -1)
 				{
 					printf("%s: No such file or directory\n", av[0]);
 					return (-1);
 				}
 			}
+			
+			else
+			{
+				wait(NULL);
+			}
 		}
 		else
 		{
-			wait(NULL);
+			printf("%s: No such file or directory\n", av[0]);
 		}
 		free(str);
 	}
