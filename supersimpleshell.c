@@ -18,7 +18,7 @@ void get_input(char **buffer, size_t *bufsize, ssize_t *getret)
 	if (*getret == -1)
 	{
 		free(*buffer);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 }
 
@@ -85,7 +85,12 @@ int main(__attribute__((unused)) int ac, char *av[])
 			returnpid = fork();
 			if (returnpid == 0)
 			{
-				execve(argv[0], argv, environ);
+				if (execve(argv[0], argv, environ) == -1)
+				{
+					printf("%s: No such file or directory\n", av[0]);
+					free(str);
+					exit(2);
+				}
 			}			
 			else
 			{
