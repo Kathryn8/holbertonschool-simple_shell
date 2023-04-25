@@ -41,7 +41,6 @@ int main(__attribute__((unused)) int ac, char *av[])
 		buffer = NULL;
 		bufsize = 0;
 		get_input(&buffer, &bufsize, &getret);
-		str = malloc(sizeof(*str) * bufsize);
 		str = strdup(buffer);
 		free(buffer);
 		delim = " \t\n";
