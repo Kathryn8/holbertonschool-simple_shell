@@ -101,7 +101,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 				if (strcmp(argv[i], "exit") == 0)
 				{
 					free(str);
-					exit(0);
+					exit(2);
 				}
 				i = i + 1;
 			}
