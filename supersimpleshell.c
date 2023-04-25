@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 
 void get_input(char **buffer, size_t *bufsize, ssize_t *getret)
 {
@@ -31,7 +32,8 @@ int main(__attribute__((unused)) int ac, char *av[])
 	char * str;
 	int i;
 	ssize_t getret = 0;
-
+	struct stat st;
+	
 	while (1)
 	{
 		buffer = NULL;
@@ -55,13 +57,21 @@ int main(__attribute__((unused)) int ac, char *av[])
 			free(str);
 			continue;
 		}
-		returnpid = fork();
-		if (returnpid == 0)
+		if (stat(argv[0], &st) == -1)
 		{
-			if (execve(argv[0], argv, NULL) == -1)
+			printf("%s: No such file or directory\n", av[0]);
+			continue;
+		}
+		if (st.st_mode & S_IXUSR)
+		{
+			returnpid = fork();
+			if (returnpid == 0)
 			{
-				printf("%s: No such file or directory\n", av[0]);
-				return (-1);
+				if (execve(argv[0], argv, NULL) == -1)
+				{
+					printf("%s: No such file or directory\n", av[0]);
+					return (-1);
+				}
 			}
 		}
 		else
