@@ -12,7 +12,6 @@ void get_input(char **buffer, size_t *bufsize, ssize_t *getret)
 	{
 		printf("$ ");
 	}
-	
 	*getret = getline(buffer, bufsize, stdin);
 	if (*getret == -1)
 	{
@@ -35,11 +34,9 @@ int main(__attribute__((unused)) int ac, char *av[])
 
 	while (1)
 	{
-		// get input;
 		buffer = NULL;
 		bufsize = 0;
 		get_input(&buffer, &bufsize, &getret);
-		//tokenise
 		str = malloc(sizeof(*str) * bufsize);
 		str = strdup(buffer);
 		free(buffer);
@@ -61,7 +58,6 @@ int main(__attribute__((unused)) int ac, char *av[])
 		returnpid = fork();
 		if (returnpid == 0)
 		{
-			// execute function
 			if (execve(argv[0], argv, NULL) == -1)
 			{
 				printf("%s: No such file or directory\n", av[0]);
