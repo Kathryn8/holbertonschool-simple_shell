@@ -5,34 +5,41 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+void get_input(char **buffer, size_t *bufsize, ssize_t *getret)
+{
+	signal(SIGINT, SIG_IGN);
+	if (isatty(0) == 1)
+	{
+		printf("$ ");
+	}
+	
+	*getret = getline(buffer, bufsize, stdin);
+	if (*getret == -1)
+	{
+		free(*buffer);
+		exit(EXIT_SUCCESS);
+	}
+}
+
 int main(__attribute__((unused)) int ac, char *av[])
 {
 	char *argv[100];
-	int returnpid;
 	char *buffer;
 	size_t bufsize;
-	ssize_t getret;
+	int returnpid;
 	const char *delim;
 	char *token;
 	char * str;
 	int i;
+	ssize_t getret = 0;
 
 	while (1)
 	{
-		signal(SIGINT, SIG_IGN);
-		if (isatty(0) == 1)
-		{
-			printf("$ ");
-		}
+		// get input;
 		buffer = NULL;
 		bufsize = 0;
-		getret = getline(&buffer, &bufsize, stdin);
-		if (getret == -1)
-		{
-			free(buffer);
-			return (0);
-		}
-
+		get_input(&buffer, &bufsize, &getret);
+		//tokenise
 		str = malloc(sizeof(*str) * bufsize);
 		str = strdup(buffer);
 		free(buffer);
@@ -51,11 +58,10 @@ int main(__attribute__((unused)) int ac, char *av[])
 			free(str);
 			continue;
 		}
-
 		returnpid = fork();
 		if (returnpid == 0)
 		{
-			
+			// execute function
 			if (execve(argv[0], argv, NULL) == -1)
 			{
 				printf("%s: No such file or directory\n", av[0]);
