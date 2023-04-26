@@ -49,6 +49,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 	ssize_t getret = 0;
 	struct stat st;
 	extern char **environ;
+	int status;
 	
 	while (1)
 	{
@@ -115,10 +116,14 @@ int main(__attribute__((unused)) int ac, char *av[])
 			}
 			else
 			{
-				wait(NULL);
+				wait(&status);
+				if (WIFEXITED(status))
+				{
+					status = WEXITSTATUS(status);
+				}
 			}
 		}
 		free(str);
 	}
-	return(127);
+	return(status);
 }
