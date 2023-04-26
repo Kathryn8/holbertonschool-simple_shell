@@ -120,4 +120,5 @@ int main(__attribute__((unused)) int ac, char *av[])
 		}
 		free(str);
 	}
+	return(127);
 }
