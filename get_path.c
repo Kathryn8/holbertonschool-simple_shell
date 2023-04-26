@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
 
 void split_string_into_words(char* string, char** words);
 
@@ -11,7 +12,7 @@ void split_string_into_words(char* string, char** words);
  *
  * Return: if found, a file path name as a string is returned, otherwise NULL.
  */
-char *get_path(char *name)
+char *get_path(char *name, char *program_name)
 {
 	int i;
 	char *string;
@@ -67,6 +68,7 @@ char *get_path(char *name)
 		i = i + 1;
 	}
 	free(paths);
+	fprintf(stderr,"%s: %s: %s\n", program_name, "1", strerror(errno));
 	return (NULL);
 }
 
