@@ -90,7 +90,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 			{
 				if (execve(argv[0], argv, environ) == -1)
 				{
-					printf("%s: No such file or directory\n", av[0]);
+					printf("%s: %s\n", av[0], strerror(errno));
 					free(str);
 					exit(2);
 				}
