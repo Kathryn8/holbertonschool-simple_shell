@@ -68,7 +68,7 @@ char *get_path(char *name, char *program_name)
 		i = i + 1;
 	}
 	free(paths);
-	fprintf(stderr,"%s: %s: %s\n", program_name, "1", strerror(errno));
+	fprintf(stderr,"in path yeaa %s: %s: %s\n", program_name, "1", strerror(errno));
 	return (NULL);
 }
 
