@@ -107,7 +107,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 			{
 				if (execve(argv[0], argv, environ) == -1)
 				{
-					fprintf(stderr,"%s: %s: %s\n", av[0], "1", strerror(errno)));
+					fprintf(stderr,"%s: %s: %s\n", av[0], "1", strerror(errno));
 					free(str);
 					free(argv[0]);
 					exit(2);
