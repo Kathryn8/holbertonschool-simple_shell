@@ -90,7 +90,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 			{
 				if (execve(argv[0], argv, environ) == -1)
 				{
-					printf("%s: %s\n", av[0], strerror(errno));
+					printf("inside child exe failed %s: %s\n", av[0], strerror(errno));
 					free(str);
 					exit(2);
 				}
@@ -116,20 +116,6 @@ int main(__attribute__((unused)) int ac, char *av[])
 			else
 			{
 				wait(NULL);
-			}
-		}
-		else
-		{
-			printf("%s: %s\n", av[0], strerror(errno));
-			i = 0;
-			while (argv[i] != NULL)
-			{
-				if (strcmp(argv[i], "exit") == 0)
-				{
-					free(str);
-					exit(2);
-				}
-				i = i + 1;
 			}
 		}
 		free(str);
