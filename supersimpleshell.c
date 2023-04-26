@@ -107,21 +107,20 @@ int main(__attribute__((unused)) int ac, char *av[])
 			{
 				if (execve(argv[0], argv, environ) == -1)
 				{
-					fprintf(stderr,"%s: %s: %s\n", av[0], "1", strerror(errno));
+					fprintf(stderr,"%s: %s: %s: not found\n", av[0], "1", argv[0]);
 					free(str);
+					free(argv[0]);
 					exit(2);
 				}
 			}
 			else
 			{
 				wait(NULL);
-				free(argv[0]);
 			}
 		}
 		else
 		{
-			free(argv[0]);
-			printf("%s: No such file or directory\n", av[0]);
+			printf("%s: %s\n", av[0], strerror(errno));
 			i = 0;
 			while (argv[i] != NULL)
 			{
