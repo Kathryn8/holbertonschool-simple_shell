@@ -80,7 +80,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 		if (strcmp(argv[0], "exit") == 0)
 		{
 			free(str);
-			exit(0);
+			exit(2);
 		}
 		if (stat(argv[0], &st) == 0 && st.st_mode & S_IXUSR)
 		{
@@ -106,7 +106,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 			{
 				if (execve(argv[0], argv, environ) == -1)
 				{
-					printf("%s: No such file or directory\n", av[0]);
+					fprintf(stderr,"%s: %s: %s\n", av[0], "1", strerror(errno)));
 					free(str);
 					free(argv[0]);
 					exit(2);
