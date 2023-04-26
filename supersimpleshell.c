@@ -7,7 +7,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 
-char *get_path(char *name);
+char *get_path(char *name, char *program_name);
 
 void get_input(char **buffer, size_t *bufsize, ssize_t *getret)
 {
@@ -100,7 +100,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 				wait(NULL);
 			}
 		}
-		else if ((argv[0] = get_path(argv[0])) != NULL)
+		else if ((argv[0] = get_path(argv[0], av[0])) != NULL)
 		{
 			returnpid = fork();
 			if (returnpid == 0)
