@@ -1,7 +1,5 @@
 # Simple Shell Project
 
-Hello Kathryn O.O
-
 This repository contains a simple shell that can run in linux. It was created for educational purposes by Holberton Software Engingeering students to culminate our studies in C language and linux system. 
 
 ## Flowchart
@@ -16,6 +14,8 @@ To run the shell locally, use `git clone` to clone this repository.
 
 To see the manual page for this function, type the following into the command line:
 `man ./man_1_simple_shell`
+
+To run the shell, compile all .c files and execute.
 
 #### Makefile
 You can compile a tesing executable with the command `make test` or compile with more checking flags with the command `make 0`.
