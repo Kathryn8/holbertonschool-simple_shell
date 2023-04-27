@@ -1,1 +1,51 @@
-not empty
+simple_shell - a simple UNIX command interpreter
+
+SYNOPSIS
+simple_shell
+
+DESCRIPTION
+simple_shell is a simple UNIX command interpreter that reads commands from standard input or from a script file and executes them. It provides a basic set of features, such as command execution, variable substitution, and piping.
+
+OPTIONS
+None
+
+COMMANDS
+The following commands are supported by simple_shell:
+
+exit [status]
+    Exit the shell with the specified status code (or 0 if none is provided).
+
+env
+    Print the current environment.
+
+set
+    Print the current shell variables.
+
+cd [directory]
+    Change the current working directory to the specified directory (or to the home directory if none is provided).
+
+help [command]
+    Display help information for the specified command (or for all commands if none is provided).
+
+EXAMPLES
+To execute a command:
+
+$ echo "Hello, World!"
+
+Hello, World!
+
+To execute a script file:
+
+$ ./my_script.sh
+
+AUTHOR
+Written by Kathryn8 and akim32.
+
+BUGS
+Report bugs to <kathryn@holbertonschool.com> and <akim32@holbertonschool.com>.
+
+COPYRIGHT
+Copyright © 2023 Holberton School.
+
+SEE ALSO
+bash(1), sh(1), csh(1), tcsh(1), zsh(1), ksh(1), dash(1), ash(1)
