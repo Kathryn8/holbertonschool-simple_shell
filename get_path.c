@@ -56,6 +56,7 @@ char *get_path(char *name, char *program_name)
 			if (strcmp(name, ep->d_name) == 0)
 			{
 				return_string = malloc(sizeof(*return_string) * (strlen(name) + 1 + strlen(each_path[i])));
+				printf("Address of return string = %p\n", &return_string);
 				return_string = strcat(each_path[i], "/");
 				return_string = strcat(return_string, ep->d_name);
 				closedir(dp);
