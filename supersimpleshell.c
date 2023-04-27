@@ -133,5 +133,6 @@ int main(__attribute__((unused)) int ac, char *av[])
 		}
 		free(str);
 	}
+	status = 127;
 	return(status);
 }
