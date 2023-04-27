@@ -50,16 +50,31 @@ int print_env(char *envp[])
 	return (0);
 }
 
+void tokenise(char *str, char *argv[])
+{
+	int i;
+	const char *delim;
+	char *token;
+
+	delim = " \t\n";
+	token = strtok(str, delim);
+	i = 0;
+	while (token != NULL)
+	{
+		argv[i] = token;
+		token = strtok(NULL, delim);
+		i = i + 1;
+	}
+	argv[i] = NULL;
+}
+
 int main(__attribute__((unused)) int ac, char *av[])
 {
 	char *argv[100];
 	char *buffer;
 	size_t bufsize;
 	int returnpid;
-	const char *delim;
-	char *token;
 	char * str;
-	int i;
 	int k;
 	ssize_t getret = 0;
 	extern char **environ;
@@ -73,15 +88,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 		get_input(&buffer, &bufsize, &getret);
 		str = strdup(buffer);
 		free(buffer);
-		delim = " \t\n";
-		token = strtok(str, delim);
-		i = 0;
-		while (token != NULL)
-		{
-			argv[i] = token;
-			token = strtok(NULL, delim);
-			i = i + 1;
-		}
+		tokenise(str, argv);
 		argv[i] = NULL;
 		if (argv[0] == NULL)
 		{
