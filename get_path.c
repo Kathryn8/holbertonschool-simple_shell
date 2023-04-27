@@ -24,7 +24,6 @@ char *get_path(char **name, char *program_name)
 	struct dirent *ep;
 	extern char **environ;
 	char *return_string;
-	char *copied_string[100];
 
 	env_key = "PATH";
 	n = strlen(env_key);
