@@ -103,10 +103,9 @@ int main(__attribute__((unused)) int ac, char *av[])
 		{
 			argv[0] = get_path(&(argv[0]), av[0]);
 			k = 1;
-			printf("after get_path call:  argv[0] = %p\n", argv[0]);
-			printf("after get_path call: &argv[0] = %p\n", &argv[0]);
 			if (argv[0] == NULL)
 			{
+				printf("EXECVE FAIL\n");
 				free(str);
 				continue;
 			}
@@ -116,7 +115,6 @@ int main(__attribute__((unused)) int ac, char *av[])
 		{
 			if (execve(argv[0], argv, environ) == -1)
 			{
-				printf("EXECVE FAIL:Address of argv[0]: %p\n", &argv[0]);
 				free(str);
 				exit(2);
 			}
@@ -129,8 +127,6 @@ int main(__attribute__((unused)) int ac, char *av[])
 				status = WEXITSTATUS(status);
 			}
 		}
-		printf("EOM:Address of  argv[0]: %p\n", argv[0]);
-		printf("EOM:Address of &argv[0]: %p\n", &argv[0]);
 		if (k == 1)
 		{
 			free(argv[0]);
