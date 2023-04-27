@@ -11,7 +11,6 @@ char *get_path(char **name, char *program_name);
 
 int is_executable(char *string)
 {
-	int return_value;
 	struct stat st;
 
 	if (stat(string, &st) == 0 && st.st_mode & S_IXUSR)
