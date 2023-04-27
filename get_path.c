@@ -62,14 +62,10 @@ char *get_path(char **name, char *program_name)
 					printf("Error: Malloc failed\n");
 					return (NULL);
 				}
-				printf("INSIDE GETPATH:Address of return string = %p\n", &return_string);
 				strcat(return_string, each_path[i]);
 				strcat(return_string, "/");
 				strcat(return_string, ep->d_name);
-				printf("return_stign: %s\n", return_string);
 				*name = strdup(return_string);
-				printf("INSIDE GETPATH:Address of return string = %p\n", &return_string);
-				printf("INSIDE GETPATH:Address of *name         = %p\n", &(*name));
 				free(return_string);
 				free(paths);
 				closedir(dp);
