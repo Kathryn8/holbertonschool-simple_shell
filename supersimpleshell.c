@@ -60,13 +60,14 @@ int main(__attribute__((unused)) int ac, char *av[])
 	char *token;
 	char * str;
 	int i;
-	int k = 0;
+	int k;
 	ssize_t getret = 0;
 	extern char **environ;
 	int status;
 	
 	while (1)
 	{
+		k = 0;
 		buffer = NULL;
 		bufsize = 0;
 		get_input(&buffer, &bufsize, &getret);
@@ -104,7 +105,6 @@ int main(__attribute__((unused)) int ac, char *av[])
 			k = 1;
 			if (argv[0] == NULL)
 			{
-				printf("EXECVE FAIL\n");
 				free(str);
 				continue;
 			}
@@ -114,6 +114,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 		{
 			if (execve(argv[0], argv, environ) == -1)
 			{
+				printf("EXECVE FAIL\n");
 				free(str);
 				exit(2);
 			}

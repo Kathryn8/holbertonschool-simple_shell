@@ -55,7 +55,7 @@ char *get_path(char **name, char *program_name)
 		{
 			if (strcmp(*name, ep->d_name) == 0)
 			{
-				return_string = calloc(sizeof(*return_string) * (strlen(*name) + 1 + strlen(each_path[i])), 1);
+				return_string = calloc(sizeof(*return_string) * (strlen(*name) + 2 + strlen(each_path[i])), 1);
 				if (return_string == NULL)
 				{
 					printf("Error: Malloc failed\n");
