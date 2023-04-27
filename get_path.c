@@ -12,7 +12,7 @@ void split_string_into_words(char* string, char** words);
  *
  * Return: if found, a file path name as a string is returned, otherwise NULL.
  */
-char *get_path(char *name, char *program_name)
+char *get_path(char **name, char *program_name)
 {
 	int i;
 	char *string;
@@ -23,7 +23,8 @@ char *get_path(char *name, char *program_name)
 	DIR *dp;
 	struct dirent *ep;
 	extern char **environ;
-	char *return_string = NULL;
+	char *return_string;
+	char *copied_string[100];
 
 	env_key = "PATH";
 	n = strlen(env_key);
@@ -53,15 +54,26 @@ char *get_path(char *name, char *program_name)
 		}
 		while (ep != NULL)
 		{
-			if (strcmp(name, ep->d_name) == 0)
+			if (strcmp(*name, ep->d_name) == 0)
 			{
-				return_string = malloc(sizeof(*return_string) * (strlen(name) + 1 + strlen(each_path[i])));
-				printf("Address of return string = %p\n", &return_string);
-				return_string = strcat(each_path[i], "/");
-				return_string = strcat(return_string, ep->d_name);
-				closedir(dp);
+				return_string = calloc(sizeof(*return_string) * (strlen(*name) + 1 + strlen(each_path[i])), 1);
+				if (return_string == NULL)
+				{
+					printf("Error: Malloc failed\n");
+					return (NULL);
+				}
+				printf("INSIDE GETPATH:Address of return string = %p\n", &return_string);
+				strcat(return_string, each_path[i]);
+				strcat(return_string, "/");
+				strcat(return_string, ep->d_name);
+				printf("return_stign: %s\n", return_string);
+				*name = strdup(return_string);
+				printf("INSIDE GETPATH:Address of return string = %p\n", &return_string);
+				printf("INSIDE GETPATH:Address of *name         = %p\n", &(*name));
+				free(return_string);
 				free(paths);
-				return (return_string);
+				closedir(dp);
+				return (*name);
 			}
 			ep = readdir(dp);
 		}
@@ -69,7 +81,7 @@ char *get_path(char *name, char *program_name)
 		i = i + 1;
 	}
 	free(paths);
-	fprintf(stderr,"%s: %s: %s: not found\n", program_name, "1", name);
+	fprintf(stderr,"%s: %s: %s: not found\n", program_name, "1", *name);
 	return (NULL);
 }
 
