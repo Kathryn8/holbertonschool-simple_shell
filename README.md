@@ -7,6 +7,7 @@ This repository contains a simple shell that can run in linux. It was created fo
 CHANGE IMAGE just an example
 
 ![giphy](https://user-images.githubusercontent.com/124347057/229031599-d81f7f28-3740-4fa7-b1fa-7e639661288c.gif)
+[Imgur](https://i.imgur.com/jpyxKLr.jpg)
 
 ## Installation
 
