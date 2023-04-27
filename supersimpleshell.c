@@ -89,7 +89,6 @@ int main(__attribute__((unused)) int ac, char *av[])
 		str = strdup(buffer);
 		free(buffer);
 		tokenise(str, argv);
-		argv[i] = NULL;
 		if (argv[0] == NULL)
 		{
 			free(str);
