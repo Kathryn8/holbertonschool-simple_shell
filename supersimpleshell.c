@@ -82,9 +82,9 @@ int main(__attribute__((unused)) int ac, char *av[])
 	int exit_status;
 
 	status = 0;
-	exit_status = 0;
 	while (1)
 	{
+		exit_status = 0;
 		k = 0;
 		buffer = NULL;
 		bufsize = 0;
