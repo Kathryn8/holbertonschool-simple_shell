@@ -79,8 +79,10 @@ int main(__attribute__((unused)) int ac, char *av[])
 	ssize_t getret = 0;
 	extern char **environ;
 	int status;
+	int exit_status;
 
 	status = 0;
+	exit_status = 0;
 	while (1)
 	{
 		k = 0;
@@ -131,7 +133,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 			wait(&status);
 			if (WIFEXITED(status))
 			{
-				status = WEXITSTATUS(status);
+				exit_status = WEXITSTATUS(status);
 			}
 		}
 		if (k == 1)
@@ -140,5 +142,5 @@ int main(__attribute__((unused)) int ac, char *av[])
 		}
 		free(str);
 	}
-	return(status);
+	return(exit_status);
 }
