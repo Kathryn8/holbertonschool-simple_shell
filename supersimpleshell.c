@@ -113,6 +113,7 @@ int builtin_commands(char **argv, char **environ, int *status, char *str)
 		free(str);
 		exit(*status);
 	}
+	return (1);
 }
 
 int main(__attribute__((unused)) int ac, char *av[])
