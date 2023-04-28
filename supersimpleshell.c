@@ -68,13 +68,40 @@ void tokenise(char *str, char *argv[])
 	argv[i] = NULL;
 }
 
+int fork_child_adult(char** argv, char** environ, char** str)
+{
+	int returnpid;
+	int status;
+	int exit_status = 0;
+
+	returnpid = fork();
+	if (returnpid == 0)
+	{
+		if (execve(argv[0], argv, environ) == -1)
+		{
+			printf("EXECVE FAIL\n");
+			free(*str);
+			exit(EXIT_FAILURE);
+		}
+	}
+	else
+	{
+		wait(&status);
+		if (WIFEXITED(status))
+		{
+			exit_status = WEXITSTATUS(status);
+		}
+    }
+	return (exit_status);
+}
+
 int main(__attribute__((unused)) int ac, char *av[])
 {
 	char *argv[100];
 	char *buffer;
 	size_t bufsize;
-	int returnpid;
-	char * str;
+	//int returnpid;
+	char *str;
 	int k;
 	ssize_t getret = 0;
 	extern char **environ;
@@ -120,7 +147,8 @@ int main(__attribute__((unused)) int ac, char *av[])
 				continue;
 			}
 		}
-		returnpid = fork();
+		exit_status = fork_child_adult(argv, environ, &str);
+		/*returnpid = fork();
 		if (returnpid == 0)
 		{
 			if (execve(argv[0], argv, environ) == -1)
@@ -137,7 +165,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 			{
 				exit_status = WEXITSTATUS(status);
 			}
-		}
+			}*/
 		if (k == 1)
 		{
 			free(argv[0]);
