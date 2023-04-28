@@ -103,7 +103,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 		if (strcmp(argv[0], "exit") == 0)
 		{
 			free(str);
-			exit(2);
+			exit(EXIT_SUCCESS);
 		}
 		if (is_executable(argv[0]) == 0)
 		{
@@ -122,7 +122,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 			{
 				printf("EXECVE FAIL\n");
 				free(str);
-				exit(2);
+				exit(EXIT_FAILURE);
 			}
 		}
 		else
@@ -139,5 +139,5 @@ int main(__attribute__((unused)) int ac, char *av[])
 		}
 		free(str);
 	}
-	exit(127);
+	return(status);
 }
