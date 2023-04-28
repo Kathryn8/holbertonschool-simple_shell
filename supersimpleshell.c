@@ -115,6 +115,8 @@ int main(__attribute__((unused)) int ac, char *av[])
 			if (argv[0] == NULL)
 			{
 				free(str);
+				exit_status = 127;
+				status = 127;
 				continue;
 			}
 		}
