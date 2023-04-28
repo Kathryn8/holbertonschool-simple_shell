@@ -79,10 +79,10 @@ int main(__attribute__((unused)) int ac, char *av[])
 	ssize_t getret = 0;
 	extern char **environ;
 	int status;
-	
+
+	status = 0;
 	while (1)
 	{
-		status = 0;
 		k = 0;
 		buffer = NULL;
 		bufsize = 0;
