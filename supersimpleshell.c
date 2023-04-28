@@ -103,7 +103,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 		if (strcmp(argv[0], "exit") == 0)
 		{
 			free(str);
-			exit(EXIT_SUCCESS);
+			exit(status);
 		}
 		if (is_executable(argv[0]) == 0)
 		{
