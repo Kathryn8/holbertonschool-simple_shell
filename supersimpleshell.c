@@ -95,12 +95,31 @@ int fork_child_adult(char** argv, char** environ, char** str)
 	return (exit_status);
 }
 
+int builtin_commands(char **argv, char **environ, int *status, char *str)
+{
+	if (argv[0] == NULL)
+	{
+		free(str);
+		return (0);
+	}
+	if (strcmp(argv[0], "env") == 0)
+	{
+		print_env(environ);
+		free(str);
+		return (0);
+		}
+	if (strcmp(argv[0], "exit") == 0)
+	{
+		free(str);
+		exit(*status);
+	}
+}
+
 int main(__attribute__((unused)) int ac, char *av[])
 {
 	char *argv[100];
 	char *buffer;
 	size_t bufsize;
-	//int returnpid;
 	char *str;
 	int k;
 	ssize_t getret = 0;
@@ -111,7 +130,6 @@ int main(__attribute__((unused)) int ac, char *av[])
 	status = 0;
 	while (1)
 	{
-		exit_status = 12;
 		k = 0;
 		buffer = NULL;
 		bufsize = 0;
@@ -119,21 +137,9 @@ int main(__attribute__((unused)) int ac, char *av[])
 		str = strdup(buffer);
 		free(buffer);
 		tokenise(str, argv);
-		if (argv[0] == NULL)
+		if (builtin_commands(argv, environ, &status, str) == 0)
 		{
-			free(str);
 			continue;
-		}
-		if (strcmp(argv[0], "env") == 0)
-		{
-			print_env(environ);
-			free(str);
-			continue;
-		}
-		if (strcmp(argv[0], "exit") == 0)
-		{
-			free(str);
-			exit(status);
 		}
 		if (is_executable(argv[0]) == 0)
 		{
@@ -142,30 +148,10 @@ int main(__attribute__((unused)) int ac, char *av[])
 			if (argv[0] == NULL)
 			{
 				free(str);
-				exit_status = 127;
-				status = 127;
 				continue;
 			}
 		}
 		exit_status = fork_child_adult(argv, environ, &str);
-		/*returnpid = fork();
-		if (returnpid == 0)
-		{
-			if (execve(argv[0], argv, environ) == -1)
-			{
-				printf("EXECVE FAIL\n");
-				free(str);
-				exit(EXIT_FAILURE);
-			}
-		}
-		else
-		{
-			wait(&status);
-			if (WIFEXITED(status))
-			{
-				exit_status = WEXITSTATUS(status);
-			}
-			}*/
 		if (k == 1)
 		{
 			free(argv[0]);
