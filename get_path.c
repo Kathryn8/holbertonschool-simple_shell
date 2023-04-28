@@ -28,12 +28,20 @@ char *get_path(char **name, char *program_name)
 	env_key = "PATH";
 	n = strlen(env_key);
 	i = 0;
+	if (environ == NULL)
+	{
+		return (NULL);
+	}
 	while (environ[i] != NULL)
 	{
 		if (strncmp(environ[i], env_key, n) == 0)
 		{
 			string = strchr(environ[i], '=');
 			paths = strdup(string + 1);
+			if (paths == NULL)
+			{
+				return (NULL);
+			}
 			split_string_into_words(paths, each_path);
 		}
 		i = i + 1;
