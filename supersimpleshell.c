@@ -60,6 +60,7 @@ void get_input(char **buffer, size_t *bufsize, ssize_t *getret)
 int print_env(char *envp[])
 {
 	int i = 0;
+
 	while (envp[i] != NULL)
 	{
 		printf("%s\n", envp[i]);
@@ -102,12 +103,12 @@ void assign_words_to_array(char *str, char *argv[])
  */
 int fork_child_adult(char **argv, char **environ, char **str)
 {
-	int returnpid;
+	int pidreturn;
 	int status;
 	int exit_status = 0;
 
-	returnpid = fork();
-	if (returnpid == 0)
+	pidreturn = fork();
+	if (pidreturn == 0)
 	{
 		if (execve(argv[0], argv, environ) == -1)
 		{
@@ -123,7 +124,7 @@ int fork_child_adult(char **argv, char **environ, char **str)
 		{
 			exit_status = WEXITSTATUS(status);
 		}
-    }
+	}
 	return (exit_status);
 }
 
@@ -190,7 +191,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 			if (argv[0] == NULL)
 			{
 				free(str);
-				return(127);
+				return (127);
 			}
 		}
 		exit_status = fork_child_adult(argv, environ, &str);
@@ -200,5 +201,5 @@ int main(__attribute__((unused)) int ac, char *av[])
 		}
 		free(str);
 	}
-	return(exit_status);
+	return (exit_status);
 }

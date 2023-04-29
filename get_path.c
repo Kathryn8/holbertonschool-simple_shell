@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <errno.h>
 
-void split_string_into_words(char* string, char** words);
+void split_string_into_words(char *string, char **words);
 char *get_env_string(char *env_key);
 DIR *_opendir(char *name);
 struct dirent *_readdir(DIR *dp);
@@ -28,7 +28,7 @@ char *get_path(char **name, char *program_name)
 	string = get_env_string("PATH");
 	if (string == NULL)
 	{
-		fprintf(stderr,"%s: %s: %s: not found\n", program_name, "1", *name);
+		fprintf(stderr, "%s: %s: %s: not found\n", program_name, "1", *name);
 		return (NULL);
 	}
 	paths = strdup(string + 1);
@@ -49,11 +49,11 @@ char *get_path(char **name, char *program_name)
 			}
 			ep = _readdir(dp);
 		}
-		closedir (dp);
+		closedir(dp);
 		i = i + 1;
 	}
 	free(paths);
-	fprintf(stderr,"%s: %s: %s: not found\n", program_name, "1", *name);
+	fprintf(stderr, "%s: %s: %s: not found\n", program_name, "1", *name);
 	return (NULL);
 }
 
@@ -64,7 +64,7 @@ char *get_path(char **name, char *program_name)
  *
  * Return: void
  */
-void split_string_into_words(char* string, char** words)
+void split_string_into_words(char *string, char **words)
 {
 	char *word;
 	int i;
