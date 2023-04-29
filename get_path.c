@@ -8,22 +8,23 @@ void split_string_into_words(char* string, char** words);
 char *get_env_string(char *env_key);
 DIR *_opendir(char *name);
 struct dirent *_readdir(DIR *dp);
+char *get_executable_string(char *path, char *program_name);
+
 /**
  * get_path - find the path of a file if it exist in PATH variable
  * @name: a string of the name of program to search for
+ * @program_name: name of the parent parent program for error message purposes
  *
  * Return: if found, a file path name as a string is returned, otherwise NULL.
  */
 char *get_path(char **name, char *program_name)
 {
 	int i;
-	char *string;
-	char *paths;
+	char *string, *paths, *return_string;
 	char *each_path[100];
 	DIR *dp;
 	struct dirent *ep;
 	extern char **environ;
-	char *return_string;
 
 	string = get_env_string("PATH");
 	paths = strdup(string + 1);
@@ -37,17 +38,7 @@ char *get_path(char **name, char *program_name)
 		{
 			if (strcmp(*name, ep->d_name) == 0)
 			{
-				return_string = calloc(sizeof(*return_string) * (strlen(*name) + 2 + strlen(each_path[i])), 1);
-				if (return_string == NULL)
-				{
-					perror("malloc");
-					return (NULL);
-				}
-				strcat(return_string, each_path[i]);
-				strcat(return_string, "/");
-				strcat(return_string, ep->d_name);
-				*name = strdup(return_string);
-				free(return_string);
+				*name = get_executable_string(each_path[i], ep->d_name);
 				free(paths);
 				closedir(dp);
 				return (*name);
@@ -148,4 +139,27 @@ struct dirent *_readdir(DIR *dp)
 		return (NULL);
 	}
 	return (ep);
+}
+
+/**
+ * get_executable_string - manipulate strings to create an executable
+ * @path: a string of the name of the path
+ * @program_name: name of the executable program
+ *
+ * Return: a string that is now executable
+ */
+char *get_executable_string(char *path, char *program_name)
+{
+	char *string;
+
+	string = calloc(sizeof(*string) * (strlen(program_name) + 2 + strlen(path)), 1);
+	if (string == NULL)
+	{
+		perror("malloc");
+		return (NULL);
+	}
+	strcat(string, path);
+	strcat(string, "/");
+	strcat(string, program_name);
+	return (string);
 }
