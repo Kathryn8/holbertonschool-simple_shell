@@ -8,7 +8,12 @@
 #include <errno.h>
 
 char *get_path(char **name, char *program_name);
-
+/**
+ * is_executable - checks if command is executable, and if user has the
+ * correct permissions to execute the file
+ * @string: command to be checked
+ * Return: 1 if executable with permissions for user to execute, 0 if not.
+ */
 int is_executable(char *string)
 {
 	struct stat st;
@@ -23,6 +28,14 @@ int is_executable(char *string)
 	}
 }
 
+/**
+ * get_input - receives a prompt from the stdin, and writes it to a buffer.
+ * @buffer: name of buffer, that the prompt is written in to
+ * @bufsize: size of the buffer
+ * @getret: number of chracters read, or -1 on failure to read a line
+ * or end of file condition (EOF)
+ * Return: nothing.
+ */
 void get_input(char **buffer, size_t *bufsize, ssize_t *getret)
 {
 	signal(SIGINT, SIG_IGN);
@@ -39,6 +52,11 @@ void get_input(char **buffer, size_t *bufsize, ssize_t *getret)
 	}
 }
 
+/**
+ * print_env - prints the current environment
+ * @envp: array of pointers to environment variables
+ * Return: 0 always.
+ */
 int print_env(char *envp[])
 {
 	int i = 0;
@@ -50,7 +68,14 @@ int print_env(char *envp[])
 	return (0);
 }
 
-void tokenise(char *str, char *argv[])
+/**
+ * assign_words_to_array - receives a string and separates each word, then
+ * assigns each word into an array
+ * @str: string to be split into words
+ * @argv: name of array that the words will be assigned to
+ * Return: nothing.
+ */
+void assign_words_to_array(char *str, char *argv[])
 {
 	int i;
 	const char *delim;
@@ -68,7 +93,14 @@ void tokenise(char *str, char *argv[])
 	argv[i] = NULL;
 }
 
-int fork_child_adult(char** argv, char** environ, char** str)
+/**
+ * fork_child_adult - creates a child process, then executes a command within.
+ * @argv: command to be executed
+ * @environ: environment variables of the current process
+ * @str: pointer to string originally entered into the prompt
+ * Return: the exit status of the child process
+ */
+int fork_child_adult(char **argv, char **environ, char **str)
 {
 	int returnpid;
 	int status;
@@ -95,25 +127,34 @@ int fork_child_adult(char** argv, char** environ, char** str)
 	return (exit_status);
 }
 
+/**
+ * builtin_commands - checks if command received matches with a built in
+ * command, and runs the command if there is a match
+ * @argv: command received
+ * @environ: environment of the current process
+ * @status: exit status number
+ * @str: pointer to string originally entered into the prompt
+ * Return: 1 if built in command found, else 0.
+ */
 int builtin_commands(char **argv, char **environ, int *status, char *str)
 {
 	if (argv[0] == NULL)
 	{
 		free(str);
-		return (0);
+		return (1);
 	}
 	if (strcmp(argv[0], "env") == 0)
 	{
 		print_env(environ);
 		free(str);
-		return (0);
+		return (1);
 		}
 	if (strcmp(argv[0], "exit") == 0)
 	{
 		free(str);
 		exit(*status);
 	}
-	return (1);
+	return (0);
 }
 
 int main(__attribute__((unused)) int ac, char *av[])
@@ -137,8 +178,8 @@ int main(__attribute__((unused)) int ac, char *av[])
 		get_input(&buffer, &bufsize, &getret);
 		str = strdup(buffer);
 		free(buffer);
-		tokenise(str, argv);
-		if (builtin_commands(argv, environ, &status, str) == 0)
+		assign_words_to_array(str, argv);
+		if (builtin_commands(argv, environ, &status, str) == 1)
 		{
 			continue;
 		}
