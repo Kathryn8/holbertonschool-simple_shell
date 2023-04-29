@@ -190,8 +190,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 			if (argv[0] == NULL)
 			{
 				free(str);
-				exit_status = 127;
-				continue;
+				return(127);
 			}
 		}
 		exit_status = fork_child_adult(argv, environ, &str);
