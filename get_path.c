@@ -26,6 +26,11 @@ char *get_path(char **name, char *program_name)
 	struct dirent *ep;
 
 	string = get_env_string("PATH");
+	if (string == NULL)
+	{
+		fprintf(stderr,"%s: %s: %s: not found\n", program_name, "1", *name);
+		return (NULL);
+	}
 	paths = strdup(string + 1);
 	split_string_into_words(paths, each_path);
 	i = 0;
