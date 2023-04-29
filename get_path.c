@@ -20,11 +20,10 @@ char *get_executable_string(char *path, char *program_name);
 char *get_path(char **name, char *program_name)
 {
 	int i;
-	char *string, *paths, *return_string;
+	char *string, *paths;
 	char *each_path[100];
 	DIR *dp;
 	struct dirent *ep;
-	extern char **environ;
 
 	string = get_env_string("PATH");
 	paths = strdup(string + 1);
