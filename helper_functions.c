@@ -27,7 +27,6 @@ int builtin_commands(char **argv, char **environ, int *status, char *str)
 	if (strcmp(argv[0], "exit") == 0)
 	{
 		free(str);
-		*status = 2;
 		exit(*status);
 	}
 	return (0);
