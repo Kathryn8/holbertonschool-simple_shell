@@ -28,7 +28,7 @@ int is_executable(char *string)
  * @getret: number of chracters read, or -1 on failure to read a line
  * or end of file condition (EOF)
  *
- Return: nothing.
+ Return: void
  */
 void get_input(char **buffer, size_t *bufsize, ssize_t *getret)
 {
