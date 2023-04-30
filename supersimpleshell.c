@@ -175,10 +175,10 @@ int main(__attribute__((unused)) int ac, char *av[])
 	int k;
 	ssize_t getret = 0;
 	extern char **environ;
-	int status;
+	/*int status;*/
 	int exit_status;
 
-	status = 0;
+	/*status = 0;*/
 	while (1)
 	{
 		k = 0;
