@@ -4,9 +4,9 @@ RM = rm -f
 CFLAGS = -Wall -Werror -Wextra -pedantic -std=gnu89 -Wno-format
 BETTY = betty
 
-SRC0 = supersimpleshell.c
+SRC0 = shell.c get_path.c helper_functions.c
 OBJ0 = $(SRC0:.c=.o)
-NAME0 = super
+NAME0 = shell
 
 all: $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
