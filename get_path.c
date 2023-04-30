@@ -1,14 +1,4 @@
-#include <dirent.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <errno.h>
-
-void split_string_into_words(char *string, char **words);
-char *get_env_string(char *env_key);
-DIR *_opendir(char *name);
-struct dirent *_readdir(DIR *dp);
-char *get_executable_string(char *path, char *program_name);
+#include "main.h"
 
 /**
  * get_path - find the path of a file if it exist in PATH variable
@@ -90,7 +80,6 @@ char *get_env_string(char *env_key)
 {
 	int i, n;
 	char *string;
-	extern char **environ;
 
 	n = strlen(env_key);
 	i = 0;
@@ -104,43 +93,6 @@ char *get_env_string(char *env_key)
 		i = i + 1;
 	}
 	return (NULL);
-}
-
-/**
- * _opendir - custom opendir function
- * @name: directory name
- *
- * Return: pointer to directory stream
- */
-DIR *_opendir(char *name)
-{
-		DIR *dp;
-
-		dp = opendir(name);
-		if (dp == NULL)
-		{
-			perror("open directory");
-			return (NULL);
-		}
-		return (dp);
-}
-
-/**
- * _readdir - custom readdir function
- * @dp: pointer to a directory stream
- *
- * Return: pointer to a directory entry struct
- */
-struct dirent *_readdir(DIR *dp)
-{
-	struct dirent *ep;
-
-	ep = readdir(dp);
-	if (ep == NULL)
-	{
-		return (NULL);
-	}
-	return (ep);
 }
 
 /**
