@@ -34,7 +34,7 @@ char *get_path(char **name, char *program_name)
 	paths = strdup(string + 1);
 	split_string_into_words(paths, each_path);
 	i = 0;
-	while (each_path[i] != NULL)
+	while (each_path[i] != NULL && i < 99)
 	{
 		dp = _opendir(each_path[i]);
 		ep = _readdir(dp);
@@ -71,7 +71,7 @@ void split_string_into_words(char *string, char **words)
 
 	i = 0;
 	word = strtok(string, ":");
-	while (word != NULL)
+	while (word != NULL && i < 99)
 	{
 		words[i] = word;
 		i = i + 1;
