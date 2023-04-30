@@ -25,7 +25,7 @@ char *get_path(char **name, char *program_name)
 	DIR *dp;
 	struct dirent *ep;
 
-	string = get_env_string("PATH");
+	string = get_env_string("PATH=");
 	if (string == NULL)
 	{
 		fprintf(stderr, "%s: %s: %s: not found\n", program_name, "1", *name);
@@ -58,7 +58,7 @@ char *get_path(char **name, char *program_name)
 }
 
 /**
- * split_string_into_words - use strtok to create an array of strings from a string
+ * split_string_into_words - create an array of strings from a string
  * @string: pointer to a string
  * @words: an array of strings or tokens returned from strtok
  *
@@ -81,12 +81,10 @@ void split_string_into_words(char *string, char **words)
 }
 
 /**
- * split_path_into_each_path - return pointer the paths string
+ * get_env_string - takes an environment key and returns corresponding value
  * @env_key: a string to search against environment variables
- * @each_path: pointer to array of strings
- * @path_string: double pointer to a string
  *
- * Return: void
+ * Return: corresponding value as a string, or NULL if no match is found
  */
 char *get_env_string(char *env_key)
 {
@@ -110,7 +108,7 @@ char *get_env_string(char *env_key)
 
 /**
  * _opendir - custom opendir function
- * @name - directory name
+ * @name: directory name
  *
  * Return: pointer to directory stream
  */
@@ -128,10 +126,10 @@ DIR *_opendir(char *name)
 }
 
 /**
- * _opendir - custom opendir function
- * @name - directory name
+ * _readdir - custom readdir function
+ * @dp: pointer to a directory stream
  *
- * Return: pointer to directory stream
+ * Return: pointer to a directory entry struct
  */
 struct dirent *_readdir(DIR *dp)
 {
@@ -155,8 +153,10 @@ struct dirent *_readdir(DIR *dp)
 char *get_executable_string(char *path, char *program_name)
 {
 	char *string;
+	size_t size;
 
-	string = calloc(sizeof(*string) * (strlen(program_name) + 2 + strlen(path)), 1);
+	size = sizeof(*string) * (strlen(program_name) + 2 + strlen(path));
+	string = calloc(size, 1);
 	if (string == NULL)
 	{
 		perror("malloc");
