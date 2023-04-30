@@ -120,9 +120,10 @@ int main(__attribute__((unused)) int ac, char *av[])
 	char *buffer;
 	size_t bufsize;
 	char *str;
-	int k, exit_status;
+	int k, exit_status, status;
 	ssize_t getret = 0;
 
+	status = 0;
 	while (1)
 	{
 		k = 0;
@@ -132,7 +133,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 		str = strdup(buffer);
 		free(buffer);
 		assign_words_to_array(str, argv);
-		if (builtin_commands(argv, environ, str) == 1)
+		if (builtin_commands(argv, environ, &status, str) == 1)
 		{
 			continue;
 		}

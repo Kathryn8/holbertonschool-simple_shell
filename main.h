@@ -26,7 +26,7 @@ char *get_executable_string(char *path, char *program_name);
 char *get_path(char **name, char *program_name);
 
 /* helper_functions.c file contents: */
-int builtin_commands(char **argv, char **environ, char *str);
+int builtin_commands(char **argv, char **environ, int *status, char *str);
 int print_env(char *envp[]);
 DIR *_opendir(char *name);
 struct dirent *_readdir(DIR *dp);

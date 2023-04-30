@@ -5,12 +5,13 @@
  * command, and runs the command if there is a match
  * @argv: command received
  * @environ: environment of the current process
+ * @status: exit status number
  * @str: pointer to string originally entered into the prompt
  *
  * Return: 1 if built in command found, else 0.
  */
 
-int builtin_commands(char **argv, char **environ, char *str)
+int builtin_commands(char **argv, char **environ, int *status, char *str)
 {
 	if (argv[0] == NULL)
 	{
@@ -26,7 +27,7 @@ int builtin_commands(char **argv, char **environ, char *str)
 	if (strcmp(argv[0], "exit") == 0)
 	{
 		free(str);
-		exit(EXIT_SUCCESS);
+		exit(*status);
 	}
 	return (0);
 }
