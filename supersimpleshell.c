@@ -8,6 +8,7 @@
 #include <errno.h>
 
 char *get_path(char **name, char *program_name);
+
 /**
  * is_executable - checks if command is executable, and if user has the
  * correct permissions to execute the file
@@ -158,6 +159,13 @@ int builtin_commands(char **argv, char **environ, int *status, char *str)
 	return (0);
 }
 
+/**
+ * main - a program to run a simple shell
+ * @ac: user input count, unused for this program
+ * @av: array of user inputs, index 0 is program name
+ *
+ * Return: 0 on success, 127 if program not found
+ */
 int main(__attribute__((unused)) int ac, char *av[])
 {
 	char *argv[100];
