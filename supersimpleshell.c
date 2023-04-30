@@ -188,7 +188,7 @@ int main(__attribute__((unused)) int ac, char *av[])
 		str = strdup(buffer);
 		free(buffer);
 		assign_words_to_array(str, argv);
-		if (builtin_commands(argv, environ, &status, str) == 1)
+		if (builtin_commands(argv, environ, str) == 1)
 		{
 			continue;
 		}
