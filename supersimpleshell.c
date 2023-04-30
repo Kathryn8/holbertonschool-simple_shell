@@ -138,7 +138,7 @@ int fork_child_adult(char **argv, char **environ, char **str)
  * @str: pointer to string originally entered into the prompt
  * Return: 1 if built in command found, else 0.
  */
-int builtin_commands(char **argv, char **environ, int *status, char *str)
+int builtin_commands(char **argv, char **environ, char *str)
 {
 	if (argv[0] == NULL)
 	{
