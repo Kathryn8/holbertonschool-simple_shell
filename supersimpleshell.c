@@ -154,7 +154,7 @@ int builtin_commands(char **argv, char **environ, int *status, char *str)
 	if (strcmp(argv[0], "exit") == 0)
 	{
 		free(str);
-		exit(*status);
+		exit(EXIT_SUCCESS);
 	}
 	return (0);
 }
