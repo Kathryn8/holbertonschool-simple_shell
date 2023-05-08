@@ -4,7 +4,7 @@ RM = rm -f
 CFLAGS = -Wall -Werror -Wextra -pedantic -std=gnu89 -Wno-format
 BETTY = betty
 
-SRC0 = shell.c get_path.c helper_functions.c
+SRC0 = shell.c get_path.c helper_functions.c main_helper_functions.c
 OBJ0 = $(SRC0:.c=.o)
 NAME0 = shell
 
